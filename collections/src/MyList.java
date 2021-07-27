@@ -1,7 +1,5 @@
-package com.shesternev.collections;
-
 public interface MyList<T> {
-    void add(T element);
+    boolean add(T element);
 
     void add(int index, T element);
 
