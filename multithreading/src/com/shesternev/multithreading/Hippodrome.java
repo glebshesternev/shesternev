@@ -3,10 +3,16 @@ package com.shesternev.multithreading;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Hippodrome {
 
     public static Hippodrome game;
+
+    private static final int stepTime = 500;
 
     private List<Horse> horses = new ArrayList<>();
 
@@ -18,28 +24,30 @@ public class Hippodrome {
         this.horses = horses;
     }
 
-    public void run(){
-        for (int i = 0; i < 10; i++) {
-            move();
+    public void run() {
+        CyclicBarrier barrier = new CyclicBarrier(horses.size(), () -> {
             print();
             try {
-                Thread.sleep(500);
+                TimeUnit.MILLISECONDS.sleep(stepTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println();
+        });
+        Horse.setBarrier(barrier);
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        for (Horse horse : horses){
+            executorService.execute(horse);
         }
-    }
-
-    public void move() {
-        for (Horse horse : horses) {
-            horse.move();
+        try {
+            TimeUnit.MILLISECONDS.sleep((long) stepTime * Horse.getSteps());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
     public void print() {
         for (Horse horse : horses) {
-            horse.print();
+            System.out.println(horse.track());
         }
     }
 

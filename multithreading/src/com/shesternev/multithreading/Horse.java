@@ -3,7 +3,26 @@ package com.shesternev.multithreading;
 
 import lombok.Data;
 
-public @Data class Horse {
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+
+public @Data class Horse implements Runnable {
+
+    private static CyclicBarrier barrier;
+    private static int steps = 20;
+
+    public static void setBarrier(CyclicBarrier barrier) {
+        Horse.barrier = barrier;
+    }
+
+    public static int getSteps() {
+        return steps;
+    }
+
+    public static void setSteps(int steps) {
+        Horse.steps = steps;
+    }
+
     private String name;
     private int speed;
     private long distance;
@@ -14,14 +33,29 @@ public @Data class Horse {
         this.distance = distance;
     }
 
+    public void run() {
+        try {
+            for (int i = 0; i < steps; i++) {
+                synchronized (this) {
+                    move();
+                }
+                barrier.await();
+            }
+        } catch (BrokenBarrierException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void move() {
         distance+=(speed * Math.random());
     }
 
-    public void print() {
+    public String track() {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < distance; i++) {
-            System.out.print('.');
+            sb.append('.');
         }
-        System.out.println(name);
+        sb.append(name);
+        return sb.toString();
     }
 }
