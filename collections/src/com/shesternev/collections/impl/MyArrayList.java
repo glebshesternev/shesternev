@@ -1,4 +1,4 @@
-package com.shesternev.collections.lists;
+package com.shesternev.collections.impl;
 
 import com.shesternev.collections.MyList;
 
@@ -21,15 +21,13 @@ public class MyArrayList<T> implements MyList<T> {
 
     @Override
     public void add(T element) {
-        checkCapacity();
-        array[size] = element;
-        size++;
+        add(size, element);
     }
 
     @Override
     public void add(int index, T element) {
         checkIndex(index);
-        checkCapacity();
+        checkAndIncreaseCapacity();
         System.arraycopy(array, index, array, index + 1, size - index);
         array[index] = element;
         size++;
@@ -98,7 +96,7 @@ public class MyArrayList<T> implements MyList<T> {
         }
     }
 
-    private void checkCapacity() {
+    private void checkAndIncreaseCapacity() {
         if (size >= array.length) {
             Object[] temp = array;
             array = new Object[(array.length) * 3 / 2 + 1];
