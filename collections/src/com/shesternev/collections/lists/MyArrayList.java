@@ -1,13 +1,16 @@
+package com.shesternev.collections.lists;
+
+import com.shesternev.collections.MyList;
+
 public class MyArrayList<T> implements MyList<T> {
 
     private static final int DEFAULT_CAPACITY = 16;
 
-    Object[] array;
-    int size;
+    private Object[] array;
+    private int size;
 
     public MyArrayList() {
-        array = new Object[DEFAULT_CAPACITY];
-        size = 0;
+        this(DEFAULT_CAPACITY);
     }
 
     public MyArrayList(int size) {
@@ -17,11 +20,10 @@ public class MyArrayList<T> implements MyList<T> {
 
 
     @Override
-    public boolean add(T element) {
+    public void add(T element) {
         checkCapacity();
         array[size] = element;
         size++;
-        return true;
     }
 
     @Override
@@ -50,9 +52,7 @@ public class MyArrayList<T> implements MyList<T> {
 
     @Override
     public boolean isEmpty() {
-        if (size == 0)
-            return true;
-        return false;
+        return size == 0;
     }
 
     @Override
@@ -89,9 +89,9 @@ public class MyArrayList<T> implements MyList<T> {
 
     private void checkIndex(int index) {
         if (index < 0)
-            throw new IllegalArgumentException("Index should be positive or zero");
+            throw new IllegalArgumentException("Index should be positive or zero. Your index:" + index );
         if (index > size)
-            throw new IllegalArgumentException("Index should be less then collection size");
+            throw new IllegalArgumentException("Index should be less then collection size. Size: " + size + "; Your index: " + index);
     }
 
     private void checkCapacity() {
@@ -101,4 +101,5 @@ public class MyArrayList<T> implements MyList<T> {
             System.arraycopy(temp, 0, array, 0, temp.length);
         }
     }
+
 }
