@@ -36,9 +36,7 @@ public @Data class Horse implements Runnable {
     public void run() {
         try {
             for (int i = 0; i < steps; i++) {
-                synchronized (this) {
-                    move();
-                }
+                move();
                 barrier.await();
             }
         } catch (BrokenBarrierException | InterruptedException e) {
