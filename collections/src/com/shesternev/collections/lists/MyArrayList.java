@@ -44,8 +44,9 @@ public class MyArrayList<T> implements MyList<T> {
     @Override
     public int indexOf(Object o) {
         for (int i = 0; i < size; i++) {
-            if (array[i].equals(o))
+            if (array[i].equals(o)) {
                 return i;
+            }
         }
         return -1;
     }
@@ -67,8 +68,9 @@ public class MyArrayList<T> implements MyList<T> {
     @Override
     public boolean remove(Object o) {
         int index = indexOf(o);
-        if (index == -1)
+        if (index == -1) {
             return false;
+        }
         System.arraycopy(array, index + 1, array, index, size - index + 1);
         size--;
         return true;
@@ -88,10 +90,12 @@ public class MyArrayList<T> implements MyList<T> {
     }
 
     private void checkIndex(int index) {
-        if (index < 0)
-            throw new IllegalArgumentException("Index should be positive or zero. Your index:" + index );
-        if (index > size)
+        if (index < 0) {
+            throw new IllegalArgumentException("Index should be positive or zero. Your index:" + index);
+        }
+        if (index > size) {
             throw new IllegalArgumentException("Index should be less then collection size. Size: " + size + "; Your index: " + index);
+        }
     }
 
     private void checkCapacity() {
