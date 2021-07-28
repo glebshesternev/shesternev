@@ -32,7 +32,7 @@ public class SpringConfig {
         return new CyclicBarrier(count, () -> {
             hippodrome().print();
             try {
-                TimeUnit.MILLISECONDS.sleep(Hippodrome.getStepTime());
+                TimeUnit.MILLISECONDS.sleep(stepTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
