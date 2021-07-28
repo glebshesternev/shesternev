@@ -1,4 +1,7 @@
-package com.shesternev.multithreading;
+package com.shesternev.multithreading.model;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,27 +13,39 @@ import java.util.concurrent.TimeUnit;
 
 public class Hippodrome {
 
-    public static Hippodrome game;
+    @Autowired
+    CyclicBarrier barrier;
 
-    private static final int stepTime = 500;
+    public static int getStepTime() {
+        return stepTime;
+    }
+
+    public static void setStepTime(int stepTime) {
+        Hippodrome.stepTime = stepTime;
+    }
+
+    private static int stepTime;
 
     private ExecutorService executorService;
 
     private List<Horse> horses = new ArrayList<>();
 
+    public int getHorsesCount() {
+        return horsesCount;
+    }
+
+    private int horsesCount;
+
     public void setHorses(List<Horse> horses) {
         this.horses = horses;
+        horsesCount = horses.size();
+    }
+
+    public void addHorses(Horse horse) {
+        horses.add(horse);
     }
 
     public void run() {
-        CyclicBarrier barrier = new CyclicBarrier(horses.size(), () -> {
-            print();
-            try {
-                TimeUnit.MILLISECONDS.sleep(stepTime);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
         Horse.setBarrier(barrier);
         executorService = Executors.newCachedThreadPool();
         for (Horse horse : horses) {
@@ -66,14 +81,4 @@ public class Hippodrome {
         executorService.shutdown();
     }
 
-    public static void main(String[] args) {
-        game = new Hippodrome();
-        game.setHorses(Arrays.asList(
-                new Horse("horse1", 3, 0),
-                new Horse("horse2", 3, 0),
-                new Horse("horse3", 3, 0)));
-        game.run();
-        game.printWinner();
-
-    }
 }

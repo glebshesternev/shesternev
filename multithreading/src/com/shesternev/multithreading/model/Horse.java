@@ -1,4 +1,4 @@
-package com.shesternev.multithreading;
+package com.shesternev.multithreading.model;
 
 
 import lombok.Getter;
