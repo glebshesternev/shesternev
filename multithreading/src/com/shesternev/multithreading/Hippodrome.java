@@ -33,7 +33,7 @@ public class Hippodrome {
         });
         Horse.setBarrier(barrier);
         executorService = Executors.newCachedThreadPool();
-        for (Horse horse : horses){
+        for (Horse horse : horses) {
             executorService.execute(horse);
         }
         try {
@@ -52,15 +52,16 @@ public class Hippodrome {
     public Horse getWinner() {
         long maxDistance = 0;
         Horse winner = null;
-        for (Horse horse : horses)
-            if (horse.getDistance() > maxDistance){
+        for (Horse horse : horses) {
+            if (horse.getDistance() > maxDistance) {
                 maxDistance = horse.getDistance();
                 winner = horse;
             }
+        }
         return winner;
     }
 
-    public void printWinner(){
+    public void printWinner() {
         System.out.println("Winner is " + getWinner().getName());
         executorService.shutdown();
     }
@@ -68,9 +69,9 @@ public class Hippodrome {
     public static void main(String[] args) {
         game = new Hippodrome();
         game.setHorses(Arrays.asList(
-                new Horse("horse1", 3, 0 ),
-                new Horse("horse2", 3, 0 ),
-                new Horse("horse3", 3, 0 )));
+                new Horse("horse1", 3, 0),
+                new Horse("horse2", 3, 0),
+                new Horse("horse3", 3, 0)));
         game.run();
         game.printWinner();
 
