@@ -1,10 +1,8 @@
 package com.shesternev.multithreading.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
@@ -15,6 +13,14 @@ public class Hippodrome {
 
     @Autowired
     CyclicBarrier barrier;
+
+    public Hippodrome() {
+
+    }
+
+    public Hippodrome(List<Horse> horses) {
+        this.horses = horses;
+    }
 
     public static int getStepTime() {
         return stepTime;

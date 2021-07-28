@@ -2,18 +2,36 @@ package com.shesternev.multithreading.config;
 
 import com.shesternev.multithreading.SpringBootApp;
 import com.shesternev.multithreading.model.Hippodrome;
+import com.shesternev.multithreading.model.Horse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.Lazy;
+
 
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 @Configuration
 public class SpringConfig {
+
+    @Value("${spring.hippodrome.stepTime}")
+    int stepTime;
+
+    @Value("${default.speed}")
+    int speed;
+
+    @Value("${default.distance}")
+    int distance;
+
+    @Value("${default.horse.count}")
+    int count;
+
+
     @Bean
     public CyclicBarrier barrier() {
-        return new CyclicBarrier(SpringBootApp.getDefaultHorseCount(), () -> {
+        return new CyclicBarrier(count, () -> {
             hippodrome().print();
             try {
                 TimeUnit.MILLISECONDS.sleep(Hippodrome.getStepTime());
@@ -25,7 +43,10 @@ public class SpringConfig {
 
     @Bean
     public Hippodrome hippodrome() {
-        Hippodrome.setStepTime(1000);
-        return new Hippodrome();
+        Hippodrome.setStepTime(stepTime);
+        return new Hippodrome(IntStream.rangeClosed(1, count)
+                .mapToObj(x -> "horse" + x)
+                .map(x -> new Horse(x, speed, distance))
+                .toList());
     }
 }
