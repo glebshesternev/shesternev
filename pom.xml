@@ -18,6 +18,7 @@
     <modules>
         <module>collections</module>
         <module>multithreading</module>
+        <module>classloader</module>
     </modules>
 
     <name>shesternev</name>
@@ -26,9 +27,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>16.0.1</java.version>
         <spring.build.module.version>2.5.2</spring.build.module.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
         <junit.jupiter.version>5.7.2</junit.jupiter.version>
     </properties>
 
