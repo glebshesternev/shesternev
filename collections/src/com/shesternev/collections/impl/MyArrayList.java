@@ -1,13 +1,16 @@
+package com.shesternev.collections.impl;
+
+import com.shesternev.collections.MyList;
+
 public class MyArrayList<T> implements MyList<T> {
 
     private static final int DEFAULT_CAPACITY = 16;
 
-    Object[] array;
-    int size;
+    private Object[] array;
+    private int size;
 
     public MyArrayList() {
-        array = new Object[DEFAULT_CAPACITY];
-        size = 0;
+        this(DEFAULT_CAPACITY);
     }
 
     public MyArrayList(int size) {
@@ -17,17 +20,14 @@ public class MyArrayList<T> implements MyList<T> {
 
 
     @Override
-    public boolean add(T element) {
-        checkCapacity();
-        array[size] = element;
-        size++;
-        return true;
+    public void add(T element) {
+        add(size, element);
     }
 
     @Override
     public void add(int index, T element) {
         checkIndex(index);
-        checkCapacity();
+        checkAndIncreaseCapacity();
         System.arraycopy(array, index, array, index + 1, size - index);
         array[index] = element;
         size++;
@@ -42,17 +42,16 @@ public class MyArrayList<T> implements MyList<T> {
     @Override
     public int indexOf(Object o) {
         for (int i = 0; i < size; i++) {
-            if (array[i].equals(o))
+            if (array[i].equals(o)) {
                 return i;
+            }
         }
         return -1;
     }
 
     @Override
     public boolean isEmpty() {
-        if (size == 0)
-            return true;
-        return false;
+        return size == 0;
     }
 
     @Override
@@ -67,8 +66,9 @@ public class MyArrayList<T> implements MyList<T> {
     @Override
     public boolean remove(Object o) {
         int index = indexOf(o);
-        if (index == -1)
+        if (index == -1) {
             return false;
+        }
         System.arraycopy(array, index + 1, array, index, size - index + 1);
         size--;
         return true;
@@ -88,13 +88,15 @@ public class MyArrayList<T> implements MyList<T> {
     }
 
     private void checkIndex(int index) {
-        if (index < 0)
-            throw new IllegalArgumentException("Index should be positive or zero");
-        if (index > size)
-            throw new IllegalArgumentException("Index should be less then collection size");
+        if (index < 0) {
+            throw new IllegalArgumentException("Index should be positive or zero. Your index:" + index);
+        }
+        if (index > size) {
+            throw new IllegalArgumentException("Index should be less then collection size. Size: " + size + "; Your index: " + index);
+        }
     }
 
-    private void checkCapacity() {
+    private void checkAndIncreaseCapacity() {
         if (size >= array.length) {
             Object[] temp = array;
             array = new Object[(array.length) * 3 / 2 + 1];
