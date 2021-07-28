@@ -8,7 +8,7 @@ public class ModuleLoader {
     public static void main(String[] args) throws ClassNotFoundException {
 //        String path = "./classloader/src/main/resources/";
         MyClassLoader classLoader = new MyClassLoader("", ClassLoader.getSystemClassLoader());
-        Class clazz = classLoader.loadClass("Horse");
+        Class clazz = classLoader.loadClass("com.shesternev.multithreading.model.Horse");
         System.out.println(clazz.getName());
         for (Method method : clazz.getMethods()) {
             System.out.println(method.getName());
