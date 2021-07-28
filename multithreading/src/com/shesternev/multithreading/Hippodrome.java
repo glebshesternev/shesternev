@@ -14,11 +14,9 @@ public class Hippodrome {
 
     private static final int stepTime = 500;
 
-    private List<Horse> horses = new ArrayList<>();
+    private ExecutorService executorService;
 
-    public List<Horse> getHorses() {
-        return horses;
-    }
+    private List<Horse> horses = new ArrayList<>();
 
     public void setHorses(List<Horse> horses) {
         this.horses = horses;
@@ -34,7 +32,7 @@ public class Hippodrome {
             }
         });
         Horse.setBarrier(barrier);
-        ExecutorService executorService = Executors.newCachedThreadPool();
+        executorService = Executors.newCachedThreadPool();
         for (Horse horse : horses){
             executorService.execute(horse);
         }
@@ -64,6 +62,7 @@ public class Hippodrome {
 
     public void printWinner(){
         System.out.println("Winner is " + getWinner().getName());
+        executorService.shutdown();
     }
 
     public static void main(String[] args) {

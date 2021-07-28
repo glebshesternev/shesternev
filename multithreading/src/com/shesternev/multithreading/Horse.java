@@ -1,12 +1,15 @@
 package com.shesternev.multithreading;
 
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
-public @Data class Horse implements Runnable {
+@Getter
+@Setter
+public class Horse implements Runnable {
 
     private static CyclicBarrier barrier;
     private static int steps = 20;
@@ -17,10 +20,6 @@ public @Data class Horse implements Runnable {
 
     public static int getSteps() {
         return steps;
-    }
-
-    public static void setSteps(int steps) {
-        Horse.steps = steps;
     }
 
     private String name;
