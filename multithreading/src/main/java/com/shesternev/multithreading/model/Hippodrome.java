@@ -36,21 +36,6 @@ public class Hippodrome {
 
     private List<Horse> horses = new ArrayList<>();
 
-    public int getHorsesCount() {
-        return horsesCount;
-    }
-
-    private int horsesCount;
-
-    public void setHorses(List<Horse> horses) {
-        this.horses = horses;
-        horsesCount = horses.size();
-    }
-
-    public void addHorses(Horse horse) {
-        horses.add(horse);
-    }
-
     public void run() {
         Horse.setBarrier(barrier);
         executorService = Executors.newCachedThreadPool();

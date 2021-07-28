@@ -1,12 +1,10 @@
 package com.shesternev.multithreading.config;
 
-import com.shesternev.multithreading.SpringBootApp;
 import com.shesternev.multithreading.model.Hippodrome;
 import com.shesternev.multithreading.model.Horse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 
 
 import java.util.concurrent.CyclicBarrier;
