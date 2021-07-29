@@ -4,7 +4,7 @@ import java.io.*;
 
 
 public class MyClassLoader extends ClassLoader {
-    private String path;
+    private final String path;
 
     public MyClassLoader(String path, ClassLoader parent) {
         super(parent);
