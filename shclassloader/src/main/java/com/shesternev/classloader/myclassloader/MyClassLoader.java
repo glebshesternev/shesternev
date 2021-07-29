@@ -26,15 +26,18 @@ public class MyClassLoader extends ClassLoader {
         InputStream is = new FileInputStream(path);
         long length = new File(path).length();
         if (length > Integer.MAX_VALUE) {
+            is.close();
             throw new FileNotFoundException("File " + path + " not found");
         }
         byte[] bytes = new byte[(int) length];
         int offset = 0;
-        int numRead;
-        while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+        int numRead = 0;
+        while (offset < bytes.length && numRead >= 0) {
+            numRead = is.read(bytes, offset, bytes.length - offset);
             offset += numRead;
         }
         if (offset < bytes.length) {
+            is.close();
             throw new IOException("Could not read file " + path);
         }
         is.close();
