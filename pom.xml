@@ -16,8 +16,8 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>collections</module>
-        <module>multithreading</module>
+        <module>shcollections</module>
+        <module>shmultithreading</module>
     </modules>
 
     <name>shesternev</name>
