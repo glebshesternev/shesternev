@@ -17,13 +17,13 @@ public class SpringConfig {
     @Value("${spring.hippodrome.stepTime}")
     int stepTime;
 
-    @Value("${default.speed}")
+    @Value("${speed}")
     int speed;
 
-    @Value("${default.distance}")
+    @Value("${distance}")
     int distance;
 
-    @Value("${default.horse.count}")
+    @Value("${horse.count}")
     int count;
 
 

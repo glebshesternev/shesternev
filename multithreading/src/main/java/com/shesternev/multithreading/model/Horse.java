@@ -44,7 +44,7 @@ public class Horse implements Runnable {
     }
 
     public void move() {
-        distance+=(speed * Math.random());
+        distance += (speed * Math.random());
     }
 
     public String track() {
