@@ -16,8 +16,8 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>shcollections</module>
-        <module>shmultithreading</module>
+        <module>collections</module>
+        <module>multithreading</module>
         <module>shclassloader</module>
     </modules>
 
