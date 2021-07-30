@@ -19,6 +19,7 @@
         <module>shcollections</module>
         <module>shmultithreading</module>
         <module>shclassloader</module>
+        <module>shdb</module>
     </modules>
 
     <name>shesternev</name>
