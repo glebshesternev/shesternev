@@ -19,7 +19,6 @@ public class SpringBootApp implements CommandLineRunner {
         SpringApplication.run(SpringBootApp.class, args);
     }
 
-
     @Override
     public void run(String... args) {
 

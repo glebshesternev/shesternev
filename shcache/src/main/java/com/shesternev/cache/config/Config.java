@@ -26,7 +26,6 @@ public class Config {
     @Value("${cache.second.level.capacity}")
     private int capacity;
 
-
     @Bean
     public FirstLevelCache firstLevelCache() {
         return new FirstLevelCache(lifetime);
@@ -41,7 +40,6 @@ public class Config {
     public CacheAspect cacheAspect() {
         return new CacheAspect(firstLevelCache(), secondLevelCache());
     }
-
 
     @Bean
     public UserRepository userRepository() {
