@@ -14,13 +14,26 @@ public class CacheAspect {
 
     private final MyCache<String, User> firstLevelCache;
     private final MyCache<String, User> secondLevelCache;
+    private final boolean firstLevelCacheFlag;
+    private final boolean secondLevelCacheFlag;
 
     @Around("execution(* com.shesternev.cache.repository.UserRepository.get(String)) && args(name)")
     public User proxyGetUser(ProceedingJoinPoint joinPoint, String name) throws Throwable {
+        if (!firstLevelCacheFlag) {
+            User user = (User) joinPoint.proceed();
+            user.setMarker("repo");
+            return user;
+        }
         try {
             return findFirstLevelCache(name);
         } catch (CacheException firstLevelException) {
-           return findSecondLevelCache(joinPoint, name);
+            if (!secondLevelCacheFlag) {
+                User user = (User) joinPoint.proceed();
+                firstLevelCache.put(name, user);
+                user.setMarker("repo");
+                return user;
+            }
+            return findSecondLevelCache(joinPoint, name);
         }
     }
 

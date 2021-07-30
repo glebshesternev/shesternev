@@ -26,6 +26,12 @@ public class Config {
     @Value("${cache.second.level.capacity}")
     private int capacity;
 
+    @Value("${cache.first.level.flag}")
+    private boolean firstLevelCacheFlag;
+
+    @Value("${cache.second.level.flag}")
+    private boolean secondLevelCacheFlag;
+
     @Bean
     public FirstLevelCache firstLevelCache() {
         return new FirstLevelCache(lifetime);
@@ -38,7 +44,7 @@ public class Config {
 
     @Bean
     public CacheAspect cacheAspect() {
-        return new CacheAspect(firstLevelCache(), secondLevelCache());
+        return new CacheAspect(firstLevelCache(), secondLevelCache(), firstLevelCacheFlag, secondLevelCacheFlag);
     }
 
     @Bean
