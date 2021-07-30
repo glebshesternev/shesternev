@@ -5,6 +5,7 @@ import com.shesternev.cache.caches.FirstLevelCache;
 import com.shesternev.cache.caches.SecondLevelCache;
 import com.shesternev.cache.model.User;
 import com.shesternev.cache.repository.UserRepository;
+import com.shesternev.cache.sheduler.FirstLevelCacheScheduler;
 import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,13 +29,11 @@ public class Config {
 
     @Bean
     public FirstLevelCache firstLevelCache() {
-
         return new FirstLevelCache(lifetime);
     }
 
     @Bean
     public SecondLevelCache secondLevelCache() {
-
         return new SecondLevelCache(capacity);
     }
 
@@ -42,6 +41,7 @@ public class Config {
     public CacheAspect cacheAspect() {
         return new CacheAspect(firstLevelCache(), secondLevelCache());
     }
+
 
     @Bean
     public UserRepository userRepository() {

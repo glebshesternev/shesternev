@@ -36,11 +36,15 @@ public class FirstLevelCache implements MyCache<String, User> {
         cache.put(name, new Pair<>(user, LocalTime.now()));
     }
 
-    @Scheduled(fixedRate = 1000)
-    protected List<User> clear() {
-        List<Entry<String, Pair<User, LocalTime>>> entries = cache.entrySet().stream().filter(this::checkTime).toList();
-        entries.forEach(x -> cache.remove(x.getKey()));
-        return entries.stream().map(x -> x.getValue().getKey()).toList();
+    public List<User> clear() {
+        List<User> list = cache.entrySet()
+            .stream()
+            .filter(this::checkTime)
+            .map(x -> x.getValue().getKey())
+            .toList();
+        list.forEach(x -> cache.remove(x.getName()));
+        return list;
+
     }
 
     private boolean checkTime(Entry<String, Pair<User, LocalTime>> entry) {

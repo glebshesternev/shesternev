@@ -21,14 +21,13 @@ public class SecondLevelCache implements MyCache<String, User> {
     @Override
     public User find(String name) throws CacheException {
         if (cache.containsKey(name)) {
-            return  cache.get(name);
-        } else {
-            throw new CacheException(name + " not found");
+            return cache.get(name);
         }
+        throw new CacheException(name + " not found");
     }
 
     @Override
     public void put(String name, User user) {
-        cache.put(name,user);
+        cache.put(name, user);
     }
 }
