@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import javafx.util.Pair;
-import org.springframework.scheduling.annotation.Scheduled;
 
 
 public class FirstLevelCache implements MyCache<String, User> {
