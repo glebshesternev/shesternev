@@ -1,8 +1,8 @@
-package com.shesternev.multithreading;
+package com.shesternev.cache;
 
 
-import com.shesternev.multithreading.model.User;
-import com.shesternev.multithreading.repository.MyRepository;
+import com.shesternev.cache.model.User;
+import com.shesternev.cache.repository.MyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

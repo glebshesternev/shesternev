@@ -1,7 +1,7 @@
-package com.shesternev.multithreading.repository;
+package com.shesternev.cache.repository;
 
-import com.shesternev.multithreading.exception.UserException;
-import com.shesternev.multithreading.model.User;
+import com.shesternev.cache.exception.UserException;
+import com.shesternev.cache.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +21,6 @@ public class UserRepository implements MyRepository<String, User> {
     public User get(String name) {
         for (User user : users) {
             if (user.getName().equals(name)) {
-                user.setMarker("repo");
                 return user;
             }
         }

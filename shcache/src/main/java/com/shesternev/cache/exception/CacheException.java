@@ -1,4 +1,4 @@
-package com.shesternev.multithreading.exception;
+package com.shesternev.cache.exception;
 
 public class CacheException extends Exception {
     public CacheException(String message) {

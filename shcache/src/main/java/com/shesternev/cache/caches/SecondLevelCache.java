@@ -1,7 +1,7 @@
-package com.shesternev.multithreading.caches;
+package com.shesternev.cache.caches;
 
-import com.shesternev.multithreading.exception.CacheException;
-import com.shesternev.multithreading.model.User;
+import com.shesternev.cache.exception.CacheException;
+import com.shesternev.cache.model.User;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -21,9 +21,7 @@ public class SecondLevelCache implements MyCache<String, User> {
     @Override
     public User find(String name) throws CacheException {
         if (cache.containsKey(name)) {
-            User user = cache.get(name);
-            user.setMarker("secondCache");
-            return user;
+            return  cache.get(name);
         } else {
             throw new CacheException(name + " not found");
         }

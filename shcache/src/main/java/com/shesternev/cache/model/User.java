@@ -1,4 +1,4 @@
-package com.shesternev.multithreading.model;
+package com.shesternev.cache.model;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
