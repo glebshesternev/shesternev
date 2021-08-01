@@ -7,15 +7,20 @@ import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Aspect
 @RequiredArgsConstructor
 public class CacheAspect {
 
-    private final MyCache<String, User> firstLevelCache;
-    private final MyCache<String, User> secondLevelCache;
+    @Autowired
+    private FirstLevelCache firstLevelCache;
+    @Autowired(required = false)
+    private SecondLevelCache secondLevelCache;
     private final boolean firstLevelCacheFlag;
     private final boolean secondLevelCacheFlag;
+
+
 
     @Around("execution(* com.shesternev.cache.repository.UserRepository.get(String)) && args(name)")
     public User proxyGetUser(ProceedingJoinPoint joinPoint, String name) throws Throwable {
@@ -58,6 +63,9 @@ public class CacheAspect {
 
     @Around("execution(* com.shesternev.cache.caches.FirstLevelCache.clear())")
     public void proxyFirstLevelCacheClear(ProceedingJoinPoint joinPoint) throws Throwable {
+        if (!secondLevelCacheFlag) {
+            joinPoint.proceed();
+        }
         List<User> users = (List<User>) joinPoint.proceed();
         users.forEach(x -> secondLevelCache.put(x.getName(), x));
     }

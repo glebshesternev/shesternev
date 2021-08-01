@@ -40,11 +40,13 @@ public class FirstLevelCache implements MyCache<String, User> {
             .stream()
             .filter(this::checkTime)
             .map(x -> x.getValue().getKey())
-            .map(x -> {
-                cache.remove(x);
-                return x;
-            })
+            .map(this::removeUser)
             .toList();
+    }
+
+    private User removeUser(User user) {
+        cache.remove(user.getName());
+        return user;
     }
 
     private boolean checkTime(Entry<String, Pair<User, LocalTime>> entry) {

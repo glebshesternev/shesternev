@@ -9,7 +9,9 @@ import com.shesternev.cache.sheduler.FirstLevelCacheScheduler;
 import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -33,18 +35,21 @@ public class Config {
     private boolean secondLevelCacheFlag;
 
     @Bean
+    @ConditionalOnProperty("cache.first.level.flag")
     public FirstLevelCache firstLevelCache() {
         return new FirstLevelCache(lifetime);
     }
 
     @Bean
+    @ConditionalOnProperty("cache.second.level.flag")
     public SecondLevelCache secondLevelCache() {
         return new SecondLevelCache(capacity);
     }
 
     @Bean
+    @ConditionalOnProperty("cache.first.level.flag")
     public CacheAspect cacheAspect() {
-        return new CacheAspect(firstLevelCache(), secondLevelCache(), firstLevelCacheFlag, secondLevelCacheFlag);
+        return new CacheAspect(firstLevelCacheFlag, secondLevelCacheFlag);
     }
 
     @Bean
