@@ -3,10 +3,10 @@ package com.shesternev.cache.caches;
 import com.shesternev.cache.model.User;
 import com.shesternev.cache.exception.CacheException;
 import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import javafx.util.Pair;
 
 
@@ -17,7 +17,7 @@ public class FirstLevelCache implements MyCache<String, User> {
 
     public FirstLevelCache(int lifetime) {
         this.lifetime = lifetime;
-        cache = new HashMap<>();
+        cache = new ConcurrentHashMap<>();
     }
 
 
@@ -36,14 +36,15 @@ public class FirstLevelCache implements MyCache<String, User> {
     }
 
     public List<User> clear() {
-        List<User> list = cache.entrySet()
+        return cache.entrySet()
             .stream()
             .filter(this::checkTime)
             .map(x -> x.getValue().getKey())
+            .map(x -> {
+                cache.remove(x);
+                return x;
+            })
             .toList();
-        list.forEach(x -> cache.remove(x.getName()));
-        return list;
-
     }
 
     private boolean checkTime(Entry<String, Pair<User, LocalTime>> entry) {
