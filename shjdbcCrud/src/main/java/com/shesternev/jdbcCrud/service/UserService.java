@@ -2,7 +2,6 @@ package com.shesternev.jdbcCrud.service;
 
 import com.shesternev.jdbcCrud.model.User;
 import com.shesternev.jdbcCrud.repository.MyCrudRepository;
-import com.shesternev.jdbcCrud.repository.UserRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class UserService{
-    private final UserRepository userRepository;
+    private final MyCrudRepository<Integer, User> userRepository;
 
     public User get(Integer id) {
         return userRepository.get(id);
