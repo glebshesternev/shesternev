@@ -12,8 +12,8 @@ public class User {
         this.password = generatePassword();
     }
 
-    private String name;
-    private String password;
+    private final String name;
+    private final String password;
 
     //marker who return user
     private String marker = null;
