@@ -1,6 +1,7 @@
 package com.shesternev.jdbcCrud.config;
 
 import com.shesternev.jdbcCrud.repository.UserRepository;
+import javax.sql.DataSource;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +24,7 @@ public class Config {
     private int maxActive;
 
     @Bean
-    public BasicDataSource dataSource() {
+    public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(driverClassName);
         dataSource.setUrl(url);

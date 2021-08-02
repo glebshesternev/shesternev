@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.dbcp.BasicDataSource;
 
 @RequiredArgsConstructor
 public class UserRepository implements MyCrudRepository<Integer, User> {
@@ -18,169 +18,87 @@ public class UserRepository implements MyCrudRepository<Integer, User> {
     private static final String SQL_SELECT_USER = "select id, name, email, password from users where id = ?";
     private static final String SQL_SELECT_ALL_USERS = "select id, name, email, password from users";
     private static final String SQL_DELETE_USER = "delete from users where id = ?";
-    private final BasicDataSource dataSource;
+    private final DataSource dataSource;
 
     @Override
     public User get(Integer id) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        try {
-            conn = dataSource.getConnection();
-            stmt = conn.prepareStatement(SQL_SELECT_USER);
-            stmt.setLong(1, id);
-            rs = stmt.executeQuery();
-            User user = null;
-            if (rs.next()) {
-                user = new User();
-                user.setId(rs.getInt("id"));
-                user.setName(rs.getString("name"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("password"));
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_USER)) {
+            statement.setLong(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                User user = null;
+                if (resultSet.next()) {
+                    user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setName(resultSet.getString("name"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setPassword(resultSet.getString("password"));
+                }
+                return user;
             }
-            return user;
         } catch (SQLException e) {
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                }
-            }
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                }
-            }
+            e.printStackTrace();
         }
         return null;
     }
 
     @Override
     public List<User> getAll() {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        try {
-            conn = dataSource.getConnection();
-            stmt = conn.prepareStatement(SQL_SELECT_ALL_USERS);
-            rs = stmt.executeQuery();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_USERS);
+             ResultSet resultSet = statement.executeQuery()) {
             List<User> users = new ArrayList<>();
-            while (rs.next()) {
+            while (resultSet.next()) {
                 User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setName(rs.getString("name"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("password"));
+                user.setId(resultSet.getInt("id"));
+                user.setName(resultSet.getString("name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
                 users.add(user);
             }
             return users;
         } catch (SQLException e) {
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                }
-            }
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                }
-            }
+            e.printStackTrace();
         }
         return null;
     }
 
     @Override
     public void create(User user) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        try {
-            conn = dataSource.getConnection();
-            stmt = conn.prepareStatement(SQL_INSERT_USER);
-            stmt.setInt(1, user.getId());
-            stmt.setString(2, user.getName());
-            stmt.setString(3, user.getEmail());
-            stmt.setString(4, user.getPassword());
-            stmt.execute();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_INSERT_USER)) {
+            statement.setInt(1, user.getId());
+            statement.setString(2, user.getName());
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getPassword());
+            statement.execute();
         } catch (SQLException e) {
-
-        } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-            }
+            e.printStackTrace();
         }
     }
 
     @Override
     public void update(User user) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        try {
-            conn = dataSource.getConnection();
-            stmt = conn.prepareStatement(SQL_UPDATE_USER);
-            stmt.setString(1, user.getName());
-            stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getPassword());
-            stmt.setLong(4, user.getId());
-            stmt.execute();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER)) {
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
+            statement.setLong(4, user.getId());
+            statement.execute();
         } catch (SQLException e) {
-
-        } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-            }
+            e.printStackTrace();
         }
     }
 
     @Override
     public void delete(Integer id) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        try {
-            conn = dataSource.getConnection();
-            stmt = conn.prepareStatement(SQL_DELETE_USER);
-            stmt.setInt(1, id);
-            stmt.execute();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_DELETE_USER)) {
+            statement.setInt(1, id);
+            statement.execute();
         } catch (SQLException e) {
-
-        } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-            }
+            e.printStackTrace();
         }
     }
 }

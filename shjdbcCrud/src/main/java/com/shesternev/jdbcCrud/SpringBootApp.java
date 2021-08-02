@@ -1,14 +1,10 @@
 package com.shesternev.jdbcCrud;
 
 
-
 import com.shesternev.jdbcCrud.model.User;
-import com.shesternev.jdbcCrud.repository.MyCrudRepository;
 import com.shesternev.jdbcCrud.service.UserService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,23 +16,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringBootApp implements CommandLineRunner {
 
 
-    private UserService userService;
-
-    @Autowired
-    public SpringBootApp(UserService userService) {
-        this.userService = userService;
-    }
-
+    private final UserService userService;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootApp.class, args);
     }
 
     @Override
-    public void run(String... args) throws ClassNotFoundException {
-        List<User> list = userService.getAll();
-        for (User user:list) {
-            log.info(user.getName());
-        }
+    public void run(String... args) {
+        userService.create(User.builder()
+            .id(1)
+            .name("test")
+            .email("test")
+            .password("test")
+            .build());
     }
 }
+
