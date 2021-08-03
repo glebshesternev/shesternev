@@ -1,5 +1,7 @@
 package com.shesternev.jdbcCrud.config;
 
+import com.shesternev.jdbcCrud.model.User;
+import com.shesternev.jdbcCrud.repository.MyCrudRepository;
 import com.shesternev.jdbcCrud.repository.UserRepository;
 import javax.sql.DataSource;
 import org.apache.commons.dbcp.BasicDataSource;
@@ -36,7 +38,7 @@ public class Config {
     }
 
     @Bean
-    public UserRepository userRepository() {
+    public MyCrudRepository<Integer, User> userRepository() {
         return new UserRepository(dataSource());
     }
 }

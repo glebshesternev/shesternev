@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
+@Slf4j
 public class UserRepository implements MyCrudRepository<Integer, User> {
 
     private static final String SQL_INSERT_USER = "insert into users (id, name, email, password) values (?, ?, ?, ?)";
@@ -37,7 +39,7 @@ public class UserRepository implements MyCrudRepository<Integer, User> {
                 return user;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         return null;
     }
@@ -58,7 +60,7 @@ public class UserRepository implements MyCrudRepository<Integer, User> {
             }
             return users;
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         return null;
     }
@@ -73,7 +75,7 @@ public class UserRepository implements MyCrudRepository<Integer, User> {
             statement.setString(4, user.getPassword());
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
 
@@ -87,7 +89,7 @@ public class UserRepository implements MyCrudRepository<Integer, User> {
             statement.setLong(4, user.getId());
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
 
@@ -98,7 +100,7 @@ public class UserRepository implements MyCrudRepository<Integer, User> {
             statement.setInt(1, id);
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
 }

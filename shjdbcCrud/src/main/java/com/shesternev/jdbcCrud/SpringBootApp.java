@@ -1,8 +1,10 @@
 package com.shesternev.jdbcCrud;
 
 
+import com.shesternev.jdbcCrud.controller.CommandLineLoop;
 import com.shesternev.jdbcCrud.model.User;
 import com.shesternev.jdbcCrud.service.UserService;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -16,20 +18,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringBootApp implements CommandLineRunner {
 
 
-    private final UserService userService;
+    private final CommandLineLoop commandLineLoop;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootApp.class, args);
     }
 
     @Override
-    public void run(String... args) {
-        userService.create(User.builder()
-            .id(1)
-            .name("test")
-            .email("test")
-            .password("test")
-            .build());
+    public void run(String... args) throws IOException {
+        commandLineLoop.run();
     }
 }
 
