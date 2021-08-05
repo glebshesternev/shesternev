@@ -21,6 +21,7 @@
         <module>shclassloader</module>
         <module>shdb</module>
         <module>shcache</module>
+        <module>shjdbcCrud</module>
     </modules>
 
     <name>shesternev</name>
