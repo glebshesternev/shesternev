@@ -1,16 +1,23 @@
 package com.shesternev.jpa.model;
 
 import com.sun.istack.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Table(name = "USERS")
@@ -41,6 +48,14 @@ public class User {
             column = @Column(name = "SHIPPING_CITY"))
     })
     private Address shippingAddress;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(unique = true)
+    private BillingDetails billingDetails;
+
+    @OneToMany(mappedBy = "buyer")
+    @BatchSize(size = 10)
+    private Set<Item> boughtItems = new HashSet<>();
 
     protected User() {
 
