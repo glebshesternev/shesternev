@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class UserService{
+public class UserService {
     private final MyCrudRepository<Integer, User> userRepository;
 
     public User get(Integer id) {

@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,16 +28,14 @@ public class CommandLineLoop {
                 case ("get"):
                     if (args.length != 2) {
                         log.info("Unknown command");
+                        break;
                     }
-                    try {
-                        printUser(userService.get(Integer.parseInt(args[1])));
-                    } catch (Exception e) {
-                        log.info("Unknown command");
-                    }
+                    printUser(userService.get(Integer.parseInt(args[1])));
                     break;
                 case ("getall"):
                     if (args.length != 1) {
                         log.info("Unknown command");
+                        break;
                     }
                     List<User> users = userService.getAll();
                     for (User user : users) {
@@ -48,32 +45,23 @@ public class CommandLineLoop {
                 case ("add"):
                     if (args.length != 5) {
                         log.info("Unknown command");
+                        break;
                     }
-                    try {
-                        userService.create(new User(Integer.parseInt(args[1]), args[2], args[3], args[4]));
-                    } catch (Exception e) {
-                        log.info("Unknown command");
-                    }
+                    userService.create(new User(Integer.parseInt(args[1]), args[2], args[3], args[4]));
                     break;
                 case ("remove"):
                     if (args.length != 2) {
                         log.info("Unknown command");
+                        break;
                     }
-                    try {
-                        userService.delete(Integer.parseInt(args[1]));
-                    } catch (Exception e) {
-                        log.info("Unknown command");
-                    }
+                    userService.delete(Integer.parseInt(args[1]));
                     break;
                 case ("set"):
                     if (args.length != 5) {
                         log.info("Unknown command");
+                        break;
                     }
-                    try {
-                        userService.update(new User(Integer.parseInt(args[1]), args[2], args[3], args[4]));
-                    } catch (Exception e) {
-                        log.info("Unknown command");
-                    }
+                    userService.update(new User(Integer.parseInt(args[1]), args[2], args[3], args[4]));
                     break;
                 case ("stop"):
                     flag = false;

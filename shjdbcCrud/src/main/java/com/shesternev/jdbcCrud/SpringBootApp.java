@@ -17,7 +17,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @Slf4j
 public class SpringBootApp implements CommandLineRunner {
 
-
     private final CommandLineLoop commandLineLoop;
 
     public static void main(String[] args) {
