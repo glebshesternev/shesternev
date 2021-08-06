@@ -1,12 +1,11 @@
 package com.shesternev.jpa.model;
 
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotNull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @Getter

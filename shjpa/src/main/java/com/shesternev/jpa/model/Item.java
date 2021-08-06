@@ -1,9 +1,9 @@
 package com.shesternev.jpa.model;
 
-import com.sun.istack.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -35,12 +35,12 @@ public class Item {
     @Column(nullable = false)
     private long price;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(
         name = "ITEM_BUYER",
         joinColumns = @JoinColumn(name = "ITEM_ID"),
         inverseJoinColumns = @JoinColumn(nullable = false))
-    @Fetch(FetchMode.SELECT)
+    @JsonIgnoreProperties("boughtItems")
     private User buyer;
 
     @ElementCollection(fetch = FetchType.EAGER)

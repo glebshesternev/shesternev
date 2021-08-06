@@ -1,6 +1,6 @@
 package com.shesternev.jpa.model;
 
-import com.sun.istack.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
@@ -29,7 +30,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull  //ignored when generating DDL
+    @NotNull //ignored when generating DDL
     @Column(nullable = false, length = 20) //not ignored when generating DDL
     private String firstName;
 
@@ -55,6 +56,7 @@ public class User {
 
     @OneToMany(mappedBy = "buyer")
     @BatchSize(size = 10)
+    @JsonIgnoreProperties("buyer")
     private Set<Item> boughtItems = new HashSet<>();
 
     protected User() {
