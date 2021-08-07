@@ -2,6 +2,7 @@ package com.shesternev.jpa.service;
 
 import com.shesternev.jpa.dto.UserDto;
 import com.shesternev.jpa.model.Address;
+import com.shesternev.jpa.model.BillingDetails;
 import com.shesternev.jpa.model.User;
 import java.util.List;
 
@@ -20,6 +21,8 @@ public interface UserService {
     void updateUserHomeAddress(long id, Address address);
 
     void updateUserShippingAddress(long id, Address address);
+
+    void updateUserBillingDetails(long id, BillingDetails billingDetails);
 
     default UserDto convertUserToDto(User user) {
         return new UserDto(user);

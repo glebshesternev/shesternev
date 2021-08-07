@@ -2,6 +2,9 @@ package com.shesternev.jpa.controller;
 
 import com.shesternev.jpa.dto.UserDto;
 import com.shesternev.jpa.model.Address;
+import com.shesternev.jpa.model.BankAccount;
+import com.shesternev.jpa.model.BillingDetails;
+import com.shesternev.jpa.model.CreditCard;
 import com.shesternev.jpa.model.User;
 import com.shesternev.jpa.service.UserService;
 import java.util.List;
@@ -41,6 +44,24 @@ public class UserController {
     public @ResponseBody
     UserDto getUser(@PathVariable long id) {
         return userService.convertUserToDto(userService.getUserById(id));
+    }
+
+    @GetMapping(value = "/{id}/bd")
+    public @ResponseBody
+    BillingDetails getUserBillingDetails(@PathVariable long id) {
+        return userService.getUserById(id).getBillingDetails();
+    }
+
+    @PutMapping(value = "/{id}/ba")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateUserBillingDetails(@PathVariable long id, @RequestBody @Valid BankAccount billingDetails) {
+        userService.updateUserBillingDetails(id, billingDetails);
+    }
+
+    @PutMapping(value = "/{id}/cc")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateUserBillingDetails(@PathVariable long id, @RequestBody @Valid CreditCard billingDetails) {
+        userService.updateUserBillingDetails(id, billingDetails);
     }
 
     @GetMapping(value = "/{id}/home")

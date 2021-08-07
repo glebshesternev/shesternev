@@ -1,6 +1,7 @@
 package com.shesternev.jpa.service;
 
 import com.shesternev.jpa.model.Address;
+import com.shesternev.jpa.model.BillingDetails;
 import com.shesternev.jpa.model.User;
 import com.shesternev.jpa.repository.UserRepository;
 import java.util.List;
@@ -53,6 +54,13 @@ public class UserServiceImpl implements UserService {
     public void updateUserShippingAddress(long id, Address address) {
         User user = userRepository.getById(id);
         user.setShippingAddress(address);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateUserBillingDetails(long id, BillingDetails billingDetails) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setBillingDetails(billingDetails);
         userRepository.save(user);
     }
 }
