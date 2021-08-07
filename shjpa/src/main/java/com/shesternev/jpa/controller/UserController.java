@@ -1,12 +1,14 @@
 package com.shesternev.jpa.controller;
 
+import com.shesternev.jpa.dto.UserDto;
+import com.shesternev.jpa.model.Address;
 import com.shesternev.jpa.model.User;
 import com.shesternev.jpa.service.UserService;
+import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,31 +25,69 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
     private final UserService userService;
 
-    @GetMapping(value = "/{id}")
-    public @ResponseBody User getUser(@PathVariable long id) {
-        return userService.getById(id);
+    @GetMapping
+    public @ResponseBody
+    List<UserDto> getAllUsers() {
+        return userService.getAllUsers()
+                          .stream()
+                          .map(userService::convertUserToDto)
+                          .toList();
     }
 
-//    @PutMapping(value = "/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void updateUser(@PathVariable long id,
-//                           @RequestBody @Valid User user) {
-//        userService.
-//    }
+    @GetMapping(value = "/{id}")
+    public @ResponseBody
+    UserDto getUser(@PathVariable long id) {
+        return userService.convertUserToDto(userService.getUserById(id));
+    }
+
+    @GetMapping(value = "/{id}/home")
+    public @ResponseBody
+    Address getUserHomeAddress(@PathVariable long id) {
+        return userService.getUserById(id)
+                          .getHomeAddress();
+    }
+
+    @GetMapping(value = "/{id}/shipping")
+    public @ResponseBody
+    Address getUserShippingAddress(@PathVariable long id) {
+        return userService.getUserById(id)
+                          .getShippingAddress();
+    }
+
+    @PutMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateUserName(@PathVariable long id, @RequestBody @Valid UserDto user) {
+        userService.updateUserName(id, user.getFirstName(), user.getLastName());
+    }
+
+    @PutMapping(value = "/{id}/home")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateUserHomeAddress(@PathVariable long id, @RequestBody @Valid Address address) {
+        userService.updateUserHomeAddress(id, address);
+    }
+
+    @PutMapping(value = "/{id}/shipping")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateUserShippingAddress(@PathVariable long id, @RequestBody @Valid Address address) {
+        userService.updateUserShippingAddress(id, address);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody User createUser(@RequestBody @Valid User user,
-                                         BindingResult result,
-                                         HttpServletResponse response) throws BindException {
-        if (result.hasErrors()){
+    public @ResponseBody
+    UserDto createUser(@RequestBody @Valid UserDto userDto,
+                       BindingResult result,
+                       HttpServletResponse response) throws BindException {
+        if (result.hasErrors()) {
             throw new BindException(result);
         }
-        userService.add(user);
+        User user = userService.convertDtoToUser(userDto);
+        userService.addUser(user);
         response.setHeader("Location", "/users/" + user.getId());
-        return user;
+        return userService.convertUserToDto(user);
     }
 
 }

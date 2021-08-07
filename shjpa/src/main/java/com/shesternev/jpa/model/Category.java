@@ -19,6 +19,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -28,11 +29,16 @@ public class Category {
     private String name;
 
     @ManyToMany
-    @MapKeyJoinColumn(name = "ITEM_ID")
-    @JoinTable(
-        name = "CATEGORY_ITEM",
-        joinColumns = @JoinColumn(name = "CATEGORY_ID"),
-        inverseJoinColumns = @JoinColumn(name = "USER_ID")
-    )
-    private Map<Item, User> itemAddedBy = new HashMap<>();
+    @MapKeyJoinColumn(name = "USER_ID")
+    @JoinTable(name = "CATEGORY_ITEM", joinColumns = @JoinColumn(name = "CATEGORY_ID"), inverseJoinColumns = @JoinColumn(name = "ITEM_ID"))
+    private Map<User, Item> itemAddedBy = new HashMap<>();
+
+    protected Category() {
+
+    }
+
+    public Category(String name) {
+        this.name = name;
+    }
 }
+

@@ -12,15 +12,13 @@ import lombok.Setter;
 public class Address {
 
     @NotNull
-    @Column(nullable = false)
     private String street;
 
     @NotNull
-    @Column(nullable = false, length = 6)
+    @Column(length = 6)
     private String zipcode;
 
     @NotNull
-    @Column(nullable = false)
     private String city;
 
     protected Address() {

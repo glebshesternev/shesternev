@@ -44,7 +44,7 @@ public class User {
         @AttributeOverride(name = "street",
             column = @Column(name = "SHIPPING_STREET")),
         @AttributeOverride(name = "zipcode",
-            column = @Column(name = "SHIPPING_ZIPCODE")),
+            column = @Column(name = "SHIPPING_ZIPCODE", length = 6)),
         @AttributeOverride(name = "city",
             column = @Column(name = "SHIPPING_CITY"))
     })
@@ -56,18 +56,15 @@ public class User {
 
     @OneToMany(mappedBy = "buyer")
     @BatchSize(size = 10)
-    @JsonIgnoreProperties("buyer")
     private Set<Item> boughtItems = new HashSet<>();
 
     protected User() {
 
     }
 
-    public User(String firstName, String lastName, Address homeAddress, Address shippingAddress) {
+    public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.homeAddress = homeAddress;
-        this.shippingAddress = shippingAddress;
     }
 
 }
