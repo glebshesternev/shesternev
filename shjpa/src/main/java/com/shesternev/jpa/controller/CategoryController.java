@@ -28,14 +28,12 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping(value = "/{id}")
-    public @ResponseBody
-    CategoryDto getCategory(@PathVariable long id) {
+    public CategoryDto getCategory(@PathVariable long id) {
         return categoryService.getCategoryById(id);
     }
 
     @GetMapping
-    public @ResponseBody
-    List<CategoryDto> getAllCategories() {
+    public List<CategoryDto> getAllCategories() {
         return categoryService.getAllCategories();
     }
 

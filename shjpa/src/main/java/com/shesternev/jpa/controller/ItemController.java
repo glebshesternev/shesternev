@@ -27,14 +27,12 @@ public class ItemController {
     private final ItemService itemService;
 
     @GetMapping(value = "/{id}")
-    public @ResponseBody
-    ItemDto getItem(@PathVariable long id) {
+    public ItemDto getItem(@PathVariable long id) {
         return itemService.getItemById(id);
     }
 
     @GetMapping
-    public @ResponseBody
-    List<ItemDto> getAllItems() {
+    public List<ItemDto> getAllItems() {
         return itemService.getAllItems();
     }
 
@@ -46,8 +44,7 @@ public class ItemController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody
-    ItemDto createItem(@RequestBody @Valid ItemDto itemDto,
+    public ItemDto createItem(@RequestBody @Valid ItemDto itemDto,
                        BindingResult result,
                        HttpServletResponse response) throws BindException {
         if (result.hasErrors()) {
