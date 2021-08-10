@@ -3,7 +3,6 @@ package com.shesternev.jpa.service;
 import com.shesternev.jpa.dto.ItemDto;
 import com.shesternev.jpa.dto.UserDto;
 import com.shesternev.jpa.model.Item;
-import com.shesternev.jpa.model.User;
 import com.shesternev.jpa.repository.ItemRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

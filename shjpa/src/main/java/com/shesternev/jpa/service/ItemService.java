@@ -2,7 +2,6 @@ package com.shesternev.jpa.service;
 
 import com.shesternev.jpa.dto.ItemDto;
 import com.shesternev.jpa.dto.UserDto;
-import com.shesternev.jpa.model.Item;
 import java.util.List;
 
 public interface ItemService {

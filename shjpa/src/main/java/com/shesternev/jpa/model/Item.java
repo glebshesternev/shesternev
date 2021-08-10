@@ -1,8 +1,6 @@
 package com.shesternev.jpa.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CollectionTable;
@@ -16,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 

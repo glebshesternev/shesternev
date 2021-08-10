@@ -1,6 +1,5 @@
 package com.shesternev.jpa.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.AttributeOverride;

@@ -1,6 +1,5 @@
 package com.shesternev.jpa.service;
 
-import com.shesternev.jpa.dto.CategoryDto;
 import com.shesternev.jpa.dto.UserDto;
 import com.shesternev.jpa.model.Address;
 import com.shesternev.jpa.model.BillingDetails;

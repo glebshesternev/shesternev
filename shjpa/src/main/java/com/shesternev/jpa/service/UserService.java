@@ -3,7 +3,6 @@ package com.shesternev.jpa.service;
 import com.shesternev.jpa.dto.UserDto;
 import com.shesternev.jpa.model.Address;
 import com.shesternev.jpa.model.BillingDetails;
-import com.shesternev.jpa.model.User;
 import java.util.List;
 
 public interface UserService {

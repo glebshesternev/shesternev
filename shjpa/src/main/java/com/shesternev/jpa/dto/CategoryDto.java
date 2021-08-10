@@ -1,6 +1,5 @@
 package com.shesternev.jpa.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.shesternev.jpa.model.Category;
 import com.shesternev.jpa.model.Item;
@@ -40,8 +39,9 @@ public class CategoryDto {
 
     private Map<User, Item> convertMapFromDto(Map<UserDto, ItemDto> mapDto) {
         Map<User, Item> map = new HashMap<>();
-        if (mapDto != null)
+        if (mapDto != null) {
             mapDto.forEach((key, value) -> map.put(key.toUser(), value.toItem()));
+        }
         return map;
     }
 
