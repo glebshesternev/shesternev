@@ -1,13 +1,13 @@
 package com.shesternev.jpa.controller;
 
 import com.shesternev.jpa.dto.CategoryDto;
-import com.shesternev.jpa.model.Category;
 import com.shesternev.jpa.service.CategoryService;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,36 +30,31 @@ public class CategoryController {
     @GetMapping(value = "/{id}")
     public @ResponseBody
     CategoryDto getCategory(@PathVariable long id) {
-        return categoryService.convertCategoryToDto(categoryService.getCategoryById(id));
+        return categoryService.getCategoryById(id);
     }
 
     @GetMapping
     public @ResponseBody
     List<CategoryDto> getAllCategories() {
-        return categoryService.getAllCategories()
-                              .stream()
-                              .map(categoryService::convertCategoryToDto)
-                              .toList();
+        return categoryService.getAllCategories();
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCategoryName(@PathVariable long id, @RequestBody @Valid CategoryDto category) {
-        categoryService.updateCategoryName(id, category.getName());
+    public void updateCategoryName(@PathVariable long id, @RequestBody @Valid CategoryDto categoryDto) {
+        categoryService.updateCategoryName(id, categoryDto.getName());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody
-    CategoryDto createCategory(@RequestBody @Valid CategoryDto categoryDto,
-                               BindingResult result,
-                               HttpServletResponse response) throws BindException {
+    public CategoryDto createCategory(@RequestBody @Valid CategoryDto categoryDto,
+                                      BindingResult result,
+                                      HttpServletResponse response) throws BindException {
         if (result.hasErrors()) {
             throw new BindException(result);
         }
-        Category category = categoryDto.toCategory();
-        categoryService.addCategory(category);
-        response.setHeader("Location", "/users/" + category.getId());
-        return categoryService.convertCategoryToDto(category);
+        categoryService.addCategory(categoryDto);
+        response.setHeader("Location", "/users/" + categoryDto.getId());
+        return categoryDto;
     }
 }

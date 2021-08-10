@@ -1,5 +1,7 @@
 package com.shesternev.jpa.service;
 
+import com.shesternev.jpa.dto.CategoryDto;
+import com.shesternev.jpa.dto.UserDto;
 import com.shesternev.jpa.model.Address;
 import com.shesternev.jpa.model.BillingDetails;
 import com.shesternev.jpa.model.User;
@@ -11,28 +13,51 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
     private final UserRepository userRepository;
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAll()
+                             .stream()
+                             .map(UserDto::new)
+                             .toList();
     }
 
     @Override
-    public void addUser(User user) {
+    public void addUser(UserDto userDto) {
+        User user = userDto.toUser();
         userRepository.save(user);
+        userDto.setId(user.getId());
+
     }
 
     @Override
-    public User getUserById(long id) {
+    public UserDto getUserById(long id) {
 
-        return userRepository.findById(id).orElseThrow();
+        return new UserDto(userRepository.findById(id)
+                                         .orElseThrow());
     }
 
     @Override
-    public void updateUser(long id, User user) {
+    public void updateUser(long id, UserDto user) {
         user.setId(id);
-        userRepository.save(user);
+        userRepository.save(user.toUser());
+    }
+
+    @Override
+    public Address getUserHomeAddress(long id) {
+        return userRepository.getById(id).getHomeAddress();
+    }
+
+    @Override
+    public Address getUserShippingAddress(long id) {
+        return userRepository.getById(id).getShippingAddress();
+    }
+
+    @Override
+    public BillingDetails getUserBillingDetails(long id) {
+        return userRepository.getById(id).getBillingDetails();
     }
 
     @Override
@@ -59,7 +84,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserBillingDetails(long id, BillingDetails billingDetails) {
-        User user = userRepository.findById(id).orElseThrow();
+        User user = userRepository.findById(id)
+                                  .orElseThrow();
         user.setBillingDetails(billingDetails);
         userRepository.save(user);
     }

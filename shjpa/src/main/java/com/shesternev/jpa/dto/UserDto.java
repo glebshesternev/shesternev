@@ -4,9 +4,11 @@ import com.shesternev.jpa.model.User;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
+@ToString
 public class UserDto {
 
     protected UserDto() {
@@ -25,6 +27,8 @@ public class UserDto {
     private String lastName;
 
     public User toUser() {
-        return new User(firstName, lastName);
+        User user = new User(firstName, lastName);
+        user.setId(id);
+        return user;
     }
 }

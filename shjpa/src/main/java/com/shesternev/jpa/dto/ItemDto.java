@@ -29,6 +29,10 @@ public class ItemDto {
     private UserDto buyer;
 
     public Item toItem() {
-        return new Item(name, price);
+        Item item = new Item(name, price);
+        item.setId(id);
+        if (buyer != null)
+            item.setBuyer(buyer.toUser());
+        return item;
     }
 }

@@ -1,5 +1,7 @@
 package com.shesternev.jpa.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.shesternev.jpa.model.Category;
 import com.shesternev.jpa.model.Item;
 import com.shesternev.jpa.model.User;
@@ -20,22 +22,33 @@ public class CategoryDto {
     public CategoryDto(Category category) {
         id = category.getId();
         name = category.getName();
-        itemAddedBy = convertMap(category.getItemAddedBy());
+        itemAddedBy = convertMapToDto(category.getItemAddedBy());
     }
 
     private long id;
     @NotNull
     private String name;
-    private Map<String, ItemDto> itemAddedBy = new HashMap<>();
+    @JsonDeserialize(keyUsing = UserDtoDeserializer.class)
+    private Map<UserDto, ItemDto> itemAddedBy;
 
-    private Map<String, ItemDto> convertMap(Map<User, Item> map) {
-        HashMap<String, ItemDto> mapDto = new HashMap<>();
-        map.forEach((key, value) -> mapDto.put(key.getId() + ": " + key.getFirstName() + " " + key.getLastName(),
-                                               new ItemDto(value)));
+    private Map<UserDto, ItemDto> convertMapToDto(Map<User, Item> map) {
+        Map<UserDto, ItemDto> mapDto = new HashMap<>();
+        if (map != null)
+            map.forEach((key, value) -> mapDto.put(new UserDto(key), new ItemDto(value)));
         return mapDto;
     }
 
+    private Map<User, Item> convertMapFromDto(Map<UserDto, ItemDto> mapDto) {
+        Map<User, Item> map = new HashMap<>();
+        if (mapDto != null)
+            mapDto.forEach((key, value) -> map.put(key.toUser(), value.toItem()));
+        return map;
+    }
+
     public Category toCategory() {
-        return new Category(name);
+        Category category = new Category(name);
+        category.setId(id);
+        category.setItemAddedBy(convertMapFromDto(itemAddedBy));
+        return category;
     }
 }

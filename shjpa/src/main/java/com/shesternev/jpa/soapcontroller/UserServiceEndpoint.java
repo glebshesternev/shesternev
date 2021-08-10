@@ -1,5 +1,6 @@
 package com.shesternev.jpa.soapcontroller;
 
+import com.shesternev.jpa.dto.UserDto;
 import com.shesternev.jpa.model.User;
 import com.shesternev.jpa.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class UserServiceEndpoint {
     @ResponsePayload
     public GetUserResponse getUser(@RequestPayload GetUserRequest request) {
         GetUserResponse response = new GetUserResponse();
-        User user = userService.getUserById(request.getId());
+        UserDto user = userService.getUserById(request.getId());
         response.setId(user.getId());
         response.setFirstName(user.getFirstName());
         response.setSecondName(user.getLastName());

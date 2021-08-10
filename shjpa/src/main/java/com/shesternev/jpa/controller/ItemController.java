@@ -1,7 +1,6 @@
 package com.shesternev.jpa.controller;
 
 import com.shesternev.jpa.dto.ItemDto;
-import com.shesternev.jpa.model.Item;
 import com.shesternev.jpa.service.ItemService;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -30,16 +29,13 @@ public class ItemController {
     @GetMapping(value = "/{id}")
     public @ResponseBody
     ItemDto getItem(@PathVariable long id) {
-        return itemService.convertItemToDto(itemService.getItemById(id));
+        return itemService.getItemById(id);
     }
 
     @GetMapping
     public @ResponseBody
     List<ItemDto> getAllItems() {
-        return itemService.getAllItems()
-                          .stream()
-                          .map(itemService::convertItemToDto)
-                          .toList();
+        return itemService.getAllItems();
     }
 
     @PutMapping(value = "/{id}")
@@ -57,9 +53,8 @@ public class ItemController {
         if (result.hasErrors()) {
             throw new BindException(result);
         }
-        Item item = itemService.convertDtoToItem(itemDto);
-        itemService.addItem(item);
-        response.setHeader("Location", "/users/" + item.getId());
-        return itemService.convertItemToDto(item);
+        itemService.addItem(itemDto);
+        response.setHeader("Location", "/users/" + itemDto.getId());
+        return itemDto;
     }
 }

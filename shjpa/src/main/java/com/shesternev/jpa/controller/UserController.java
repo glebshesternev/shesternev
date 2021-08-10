@@ -5,7 +5,6 @@ import com.shesternev.jpa.model.Address;
 import com.shesternev.jpa.model.BankAccount;
 import com.shesternev.jpa.model.BillingDetails;
 import com.shesternev.jpa.model.CreditCard;
-import com.shesternev.jpa.model.User;
 import com.shesternev.jpa.service.UserService;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -32,24 +31,18 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public @ResponseBody
-    List<UserDto> getAllUsers() {
-        return userService.getAllUsers()
-                          .stream()
-                          .map(userService::convertUserToDto)
-                          .toList();
+    public List<UserDto> getAllUsers() {
+        return userService.getAllUsers();
     }
 
     @GetMapping(value = "/{id}")
-    public @ResponseBody
-    UserDto getUser(@PathVariable long id) {
-        return userService.convertUserToDto(userService.getUserById(id));
+    public UserDto getUser(@PathVariable long id) {
+        return userService.getUserById(id);
     }
 
     @GetMapping(value = "/{id}/bd")
-    public @ResponseBody
-    BillingDetails getUserBillingDetails(@PathVariable long id) {
-        return userService.getUserById(id).getBillingDetails();
+    public BillingDetails getUserBillingDetails(@PathVariable long id) {
+        return userService.getUserBillingDetails(id);
     }
 
     @PutMapping(value = "/{id}/ba")
@@ -65,17 +58,13 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}/home")
-    public @ResponseBody
-    Address getUserHomeAddress(@PathVariable long id) {
-        return userService.getUserById(id)
-                          .getHomeAddress();
+    public Address getUserHomeAddress(@PathVariable long id) {
+        return userService.getUserHomeAddress(id);
     }
 
     @GetMapping(value = "/{id}/shipping")
-    public @ResponseBody
-    Address getUserShippingAddress(@PathVariable long id) {
-        return userService.getUserById(id)
-                          .getShippingAddress();
+    public Address getUserShippingAddress(@PathVariable long id) {
+        return userService.getUserShippingAddress(id);
     }
 
     @PutMapping(value = "/{id}")
@@ -98,17 +87,14 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody
-    UserDto createUser(@RequestBody @Valid UserDto userDto,
-                       BindingResult result,
-                       HttpServletResponse response) throws BindException {
+    public UserDto createUser(@RequestBody @Valid UserDto userDto,
+                              BindingResult result,
+                              HttpServletResponse response) throws BindException {
         if (result.hasErrors()) {
             throw new BindException(result);
         }
-        User user = userService.convertDtoToUser(userDto);
-        userService.addUser(user);
-        response.setHeader("Location", "/users/" + user.getId());
-        return userService.convertUserToDto(user);
+        userService.addUser(userDto);
+        response.setHeader("Location", "/users/" + userDto.getId());
+        return userDto;
     }
-
 }

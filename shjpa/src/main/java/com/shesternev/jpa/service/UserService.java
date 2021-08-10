@@ -8,13 +8,19 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> getAllUsers();
+    List<UserDto> getAllUsers();
 
-    void addUser(User user);
+    void addUser(UserDto user);
 
-    User getUserById(long id);
+    UserDto getUserById(long id);
 
-    void updateUser(long id, User user);
+    void updateUser(long id, UserDto user);
+
+    Address getUserHomeAddress(long id);
+
+    Address getUserShippingAddress(long id);
+
+    BillingDetails getUserBillingDetails(long id);
 
     void updateUserName(long id, String firstName, String lastName);
 
@@ -23,11 +29,4 @@ public interface UserService {
     void updateUserShippingAddress(long id, Address address);
 
     void updateUserBillingDetails(long id, BillingDetails billingDetails);
-
-    default UserDto convertUserToDto(User user) {
-        return new UserDto(user);
-    }
-    default User convertDtoToUser(UserDto userDto) {
-        return userDto.toUser();
-    }
 }
