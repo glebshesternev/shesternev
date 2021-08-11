@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "CREDIT_CARDS")
-public class CreditCard extends BillingDetails{
+public class CreditCard extends BillingDetails {
 
     @NotNull
     @Column(nullable = false)
@@ -24,5 +24,4 @@ public class CreditCard extends BillingDetails{
     @NotNull
     @Column(nullable = false)
     protected String expYear;
-
 }

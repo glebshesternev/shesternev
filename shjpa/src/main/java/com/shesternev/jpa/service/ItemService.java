@@ -17,5 +17,4 @@ public interface ItemService {
     void updateItemNameAndPrice(long id, String name, long price);
 
     void setItemBuyer(long id, UserDto user);
-
 }

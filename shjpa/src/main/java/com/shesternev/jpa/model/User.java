@@ -39,14 +39,7 @@ public class User {
 
     private Address homeAddress;
 
-    @AttributeOverrides({
-        @AttributeOverride(name = "street",
-            column = @Column(name = "SHIPPING_STREET")),
-        @AttributeOverride(name = "zipcode",
-            column = @Column(name = "SHIPPING_ZIPCODE", length = 6)),
-        @AttributeOverride(name = "city",
-            column = @Column(name = "SHIPPING_CITY"))
-    })
+    @AttributeOverrides({@AttributeOverride(name = "street", column = @Column(name = "SHIPPING_STREET")), @AttributeOverride(name = "zipcode", column = @Column(name = "SHIPPING_ZIPCODE", length = 6)), @AttributeOverride(name = "city", column = @Column(name = "SHIPPING_CITY"))})
     private Address shippingAddress;
 
     @OneToOne(cascade = CascadeType.PERSIST)
@@ -65,5 +58,4 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-
 }

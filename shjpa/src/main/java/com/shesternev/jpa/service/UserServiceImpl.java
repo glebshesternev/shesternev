@@ -17,10 +17,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getAllUsers() {
-        return userRepository.findAll()
-                             .stream()
-                             .map(UserDto::new)
-                             .toList();
+        return userRepository.findAll().stream().map(UserDto::new).toList();
     }
 
     @Override
@@ -28,14 +25,12 @@ public class UserServiceImpl implements UserService {
         User user = userDto.toUser();
         userRepository.save(user);
         userDto.setId(user.getId());
-
     }
 
     @Override
     public UserDto getUserById(long id) {
 
-        return new UserDto(userRepository.findById(id)
-                                         .orElseThrow());
+        return new UserDto(userRepository.findById(id).orElseThrow());
     }
 
     @Override
@@ -83,8 +78,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserBillingDetails(long id, BillingDetails billingDetails) {
-        User user = userRepository.findById(id)
-                                  .orElseThrow();
+        User user = userRepository.findById(id).orElseThrow();
         user.setBillingDetails(billingDetails);
         userRepository.save(user);
     }

@@ -26,5 +26,4 @@ public class GeneralController {
     public void updateItemCategory(@PathVariable long id, @RequestParam long userId, @RequestParam long itemId) {
         generalService.addItemToCategory(id, userId, itemId);
     }
-
 }

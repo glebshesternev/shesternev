@@ -23,17 +23,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto getCategoryById(long id) {
-        return new CategoryDto(categoryRepository.findById(id)
-                                                 .orElseThrow());
+        return new CategoryDto(categoryRepository.findById(id).orElseThrow());
     }
 
     @Override
     @Transactional()
     public List<CategoryDto> getAllCategories() {
-        return categoryRepository.findAll()
-                                 .stream()
-                                 .map(CategoryDto::new)
-                                 .toList();
+        return categoryRepository.findAll().stream().map(CategoryDto::new).toList();
     }
 
     @Override
@@ -45,8 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void updateCategoryName(long id, String name) {
-        Category category = categoryRepository.findById(id)
-                                              .orElseThrow();
+        Category category = categoryRepository.findById(id).orElseThrow();
         category.setName(name);
         categoryRepository.save(category);
     }

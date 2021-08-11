@@ -23,16 +23,12 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDto> getAllItems() {
-        return itemRepository.findAll()
-                             .stream()
-                             .map(ItemDto::new)
-                             .toList();
+        return itemRepository.findAll().stream().map(ItemDto::new).toList();
     }
 
     @Override
     public ItemDto getItemById(long id) {
-        return new ItemDto(itemRepository.findById(id)
-                                         .orElseThrow());
+        return new ItemDto(itemRepository.findById(id).orElseThrow());
     }
 
     @Override
@@ -43,8 +39,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void updateItemNameAndPrice(long id, String name, long price) {
-        Item item = itemRepository.findById(id)
-                                  .orElseThrow();
+        Item item = itemRepository.findById(id).orElseThrow();
         item.setName(name);
         item.setPrice(price);
         itemRepository.save(item);
@@ -52,8 +47,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void setItemBuyer(long id, UserDto user) {
-        Item item = itemRepository.findById(id)
-                                  .orElseThrow();
+        Item item = itemRepository.findById(id).orElseThrow();
         item.setBuyer(user.toUser());
         itemRepository.save(item);
     }

@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "BANK_ACCOUNTS")
-public class BankAccount extends BillingDetails{
+public class BankAccount extends BillingDetails {
 
     @NotNull
     @Column(nullable = false)
@@ -20,5 +20,4 @@ public class BankAccount extends BillingDetails{
     @NotNull
     @Column(nullable = false)
     protected String bankName;
-
 }

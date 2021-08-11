@@ -14,5 +14,4 @@ public interface CategoryService {
     void updateCategory(long id, CategoryDto categoryDto);
 
     void updateCategoryName(long id, String name);
-
 }

@@ -37,16 +37,11 @@ public class Item implements Serializable {
     private long price;
 
     @ManyToOne
-    @JoinTable(
-        name = "ITEM_BUYER",
-        joinColumns = @JoinColumn(name = "ITEM_ID"),
-        inverseJoinColumns = @JoinColumn(nullable = false))
+    @JoinTable(name = "ITEM_BUYER", joinColumns = @JoinColumn(name = "ITEM_ID"), inverseJoinColumns = @JoinColumn(nullable = false))
     private User buyer;
 
     @ElementCollection
-    @CollectionTable(
-        name = "IMAGES",
-        joinColumns = @JoinColumn(name = "ITEM_ID"))
+    @CollectionTable(name = "IMAGES", joinColumns = @JoinColumn(name = "ITEM_ID"))
     @Column(name = "FILENAME")
     private Set<String> images = new HashSet<>();
 
@@ -54,7 +49,7 @@ public class Item implements Serializable {
 
     }
 
-    public Item (String name, long price) {
+    public Item(String name, long price) {
         this.name = name;
         this.price = price;
     }

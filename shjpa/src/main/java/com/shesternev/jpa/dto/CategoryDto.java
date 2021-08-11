@@ -32,8 +32,9 @@ public class CategoryDto {
 
     private Map<UserDto, ItemDto> convertMapToDto(Map<User, Item> map) {
         Map<UserDto, ItemDto> mapDto = new HashMap<>();
-        if (map != null)
+        if (map != null) {
             map.forEach((key, value) -> mapDto.put(new UserDto(key), new ItemDto(value)));
+        }
         return mapDto;
     }
 

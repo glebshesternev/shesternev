@@ -44,8 +44,8 @@ public class ItemController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ItemDto createItem(@RequestBody @Valid ItemDto itemDto,
-                       BindingResult result,
-                       HttpServletResponse response) throws BindException {
+                              BindingResult result,
+                              HttpServletResponse response) throws BindException {
         if (result.hasErrors()) {
             throw new BindException(result);
         }

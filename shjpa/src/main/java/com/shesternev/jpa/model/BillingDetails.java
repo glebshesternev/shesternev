@@ -18,6 +18,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public abstract class BillingDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
@@ -25,5 +26,4 @@ public abstract class BillingDetails {
     @NotNull
     @Column(nullable = false)
     protected String owner;
-
 }
