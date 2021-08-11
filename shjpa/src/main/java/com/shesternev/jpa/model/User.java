@@ -3,7 +3,6 @@ package com.shesternev.jpa.model;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,7 +38,9 @@ public class User {
 
     private Address homeAddress;
 
-    @AttributeOverrides({@AttributeOverride(name = "street", column = @Column(name = "SHIPPING_STREET")), @AttributeOverride(name = "zipcode", column = @Column(name = "SHIPPING_ZIPCODE", length = 6)), @AttributeOverride(name = "city", column = @Column(name = "SHIPPING_CITY"))})
+    @AttributeOverride(name = "street", column = @Column(name = "SHIPPING_STREET"))
+    @AttributeOverride(name = "zipcode", column = @Column(name = "SHIPPING_ZIPCODE", length = 6))
+    @AttributeOverride(name = "city", column = @Column(name = "SHIPPING_CITY"))
     private Address shippingAddress;
 
     @OneToOne(cascade = CascadeType.PERSIST)
