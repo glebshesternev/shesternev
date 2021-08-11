@@ -25,14 +25,10 @@ public class UserServlet extends HttpServlet {
                          HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         request.setAttribute("user", user);
-        switch (action == null ? "info" : action) {
-            case "update":
-                request.getRequestDispatcher("views/update.jsp").forward(request, response);
-                break;
-            case "info":
-            default:
-                request.getRequestDispatcher("views/user.jsp").forward(request, response);
-                break;
+        if ("update".equals(action)) {
+            request.getRequestDispatcher("views/update.jsp").forward(request, response);
+        } else {
+            request.getRequestDispatcher("views/user.jsp").forward(request, response);
         }
     }
 
