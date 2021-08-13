@@ -23,6 +23,7 @@
         <module>shcache</module>
         <module>shjdbcCrud</module>
         <module>shjpa</module>
+        <module>shjsp</module>
     </modules>
 
     <name>shesternev</name>
