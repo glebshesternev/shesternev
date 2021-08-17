@@ -1,6 +1,5 @@
 package com.shesternev.jms.config;
 
-
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -55,5 +54,4 @@ public class Config {
     public Binding binding2() {
         return BindingBuilder.bind(myQueue2()).to(fanoutExchange());
     }
-
 }
