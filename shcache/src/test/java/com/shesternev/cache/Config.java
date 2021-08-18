@@ -10,27 +10,26 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@Configuration
+@TestConfiguration
 @EnableScheduling
 public class Config {
 
     @Value("${user.count}")
-    private int userCount;
+    private int userCount = 1000;
 
     @Value("${cache.first.level.lifetime}")
-    private int lifetime;
+    private int lifetime = 1;
 
     @Value("${cache.second.level.capacity}")
-    private int capacity;
+    private int capacity = 100;
 
     @Value("${cache.first.level.flag}")
-    private boolean firstLevelCacheFlag;
+    private boolean firstLevelCacheFlag = true;
 
     @Value("${cache.second.level.flag}")
-    private boolean secondLevelCacheFlag;
+    private boolean secondLevelCacheFlag = true;
 
     @Bean
     @ConditionalOnProperty("cache.first.level.flag")
@@ -52,10 +51,6 @@ public class Config {
 
     @Bean
     public UserRepository userRepository() {
-        return new UserRepository(
-            IntStream
-                .range(0, userCount)
-                .mapToObj(x -> (new User("user" + x)))
-                .toList());
+        return new UserRepository(IntStream.range(0, userCount).mapToObj(x -> (new User("user" + x))).toList());
     }
 }
