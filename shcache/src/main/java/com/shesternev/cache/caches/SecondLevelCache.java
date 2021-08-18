@@ -30,4 +30,9 @@ public class SecondLevelCache implements MyCache<String, User> {
     public void put(String name, User user) {
         cache.put(name, user);
     }
+
+    public void clear() {
+        cache.clear();
+    }
+
 }
