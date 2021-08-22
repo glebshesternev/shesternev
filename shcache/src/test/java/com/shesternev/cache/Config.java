@@ -17,19 +17,19 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class Config {
 
     @Value("${user.count}")
-    private int userCount = 1000;
+    private int userCount;
 
     @Value("${cache.first.level.lifetime}")
-    private int lifetime = 1;
+    private int lifetime;
 
     @Value("${cache.second.level.capacity}")
-    private int capacity = 100;
+    private int capacity;
 
     @Value("${cache.first.level.flag}")
-    private boolean firstLevelCacheFlag = true;
+    private boolean firstLevelCacheFlag;
 
     @Value("${cache.second.level.flag}")
-    private boolean secondLevelCacheFlag = true;
+    private boolean secondLevelCacheFlag;
 
     @Bean
     @ConditionalOnProperty("cache.first.level.flag")
