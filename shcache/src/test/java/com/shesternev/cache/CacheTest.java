@@ -1,23 +1,14 @@
 package com.shesternev.cache;
 
-import com.shesternev.cache.caches.CacheAspect;
-import com.shesternev.cache.caches.FirstLevelCache;
 import com.shesternev.cache.caches.MyCache;
-import com.shesternev.cache.caches.SecondLevelCache;
-import com.shesternev.cache.config.Config;
 import com.shesternev.cache.model.User;
 import com.shesternev.cache.repository.MyRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @SpringBootTest
 public class CacheTest {
