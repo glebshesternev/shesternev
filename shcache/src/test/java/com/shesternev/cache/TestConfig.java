@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @TestConfiguration
 @EnableScheduling
-public class Config {
+public class TestConfig {
 
     @Value("${user.count}")
     private int userCount;
