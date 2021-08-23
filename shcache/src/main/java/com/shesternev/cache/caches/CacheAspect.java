@@ -8,15 +8,18 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 @Aspect
 @RequiredArgsConstructor
 public class CacheAspect {
 
     @Autowired
-    private FirstLevelCache firstLevelCache;
+    @Qualifier("first")
+    private MyCache<String, User> firstLevelCache;
     @Autowired(required = false)
-    private SecondLevelCache secondLevelCache;
+    @Qualifier("second")
+    private MyCache<String, User> secondLevelCache;
     private final boolean firstLevelCacheFlag;
     private final boolean secondLevelCacheFlag;
 

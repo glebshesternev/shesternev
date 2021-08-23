@@ -1,31 +1,39 @@
 package com.shesternev.cache;
 
+import com.shesternev.cache.caches.CacheAspect;
 import com.shesternev.cache.caches.FirstLevelCache;
+import com.shesternev.cache.caches.MyCache;
 import com.shesternev.cache.caches.SecondLevelCache;
+import com.shesternev.cache.config.Config;
 import com.shesternev.cache.model.User;
 import com.shesternev.cache.repository.MyRepository;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = TestConfig.class)
+@SpringBootTest
 public class CacheTest {
 
     @Autowired
     private MyRepository<String, User> userRepository;
 
     @Autowired
-    private FirstLevelCache firstLevelCache;
+    @Qualifier("first")
+    private MyCache<String, User> firstLevelCache;
 
     @Autowired
-    private SecondLevelCache secondLevelCache;
+    @Qualifier("second")
+    private MyCache<String, User> secondLevelCache;
 
-    @After
+    @AfterEach
     public void clearCache() {
         firstLevelCache.clear();
         secondLevelCache.clear();
@@ -35,7 +43,7 @@ public class CacheTest {
     public void firstLevelCache() {
         userRepository.get("user0");
         User user = userRepository.get("user0");
-        Assert.assertEquals("first", user.getMarker());
+        Assertions.assertEquals("first", user.getMarker());
     }
 
     @Test
@@ -43,7 +51,7 @@ public class CacheTest {
         userRepository.get("user0");
         Thread.sleep(3000);
         User user = userRepository.get("user0");
-        Assert.assertEquals("second", user.getMarker());
+        Assertions.assertEquals("second", user.getMarker());
     }
 
     @Test
@@ -54,6 +62,6 @@ public class CacheTest {
         Thread.sleep(3000);
         User user = userRepository.get("user0");
         System.out.println(user.getMarker());
-        Assert.assertEquals("repo", user.getMarker());
+        Assertions.assertEquals("repo", user.getMarker());
     }
 }

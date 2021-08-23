@@ -35,6 +35,7 @@ public class FirstLevelCache implements MyCache<String, User> {
         cache.put(name, new Pair<>(user, LocalTime.now()));
     }
 
+    @Override
     public List<User> clear() {
         return cache.entrySet()
             .stream()
