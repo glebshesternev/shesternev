@@ -24,6 +24,7 @@
         <module>shjdbcCrud</module>
         <module>shjpa</module>
         <module>shjsp</module>
+        <module>shjms</module>
     </modules>
 
     <name>shesternev</name>
