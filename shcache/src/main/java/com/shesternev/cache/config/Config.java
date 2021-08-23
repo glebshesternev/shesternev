@@ -61,11 +61,13 @@ public class Config {
     }
 
     @Bean
+    @ConditionalOnProperty("cache.first.level.flag")
     public FirstLevelCacheScheduler firstLevelCacheScheduler() {
         return new FirstLevelCacheScheduler(firstLevelCache());
     }
 
     @Bean
+    @ConditionalOnProperty("cache.second.level.flag")
     public SecondLevelCacheScheduler secondLevelCacheScheduler() {
         return new SecondLevelCacheScheduler(secondLevelCache());
     }
