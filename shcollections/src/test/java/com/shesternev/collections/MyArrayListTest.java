@@ -31,8 +31,6 @@ public class MyArrayListTest {
         Assert.assertThrows(IllegalArgumentException.class, () -> list.add(list.size() + 1, 1));
     }
 
-
-
     @Test
     public void get() {
         Integer[] simpleData = {1};
@@ -44,7 +42,6 @@ public class MyArrayListTest {
     public void getShouldThrowIllegalArgumentException() {
         Assert.assertThrows(IllegalArgumentException.class, () -> list.get(list.size() + 1));
     }
-
 
     @Test
     public void set() {
@@ -59,7 +56,7 @@ public class MyArrayListTest {
 
     @Test
     public void removeByIndex() {
-        Integer[] simpleData = {1, 2 ,3};
+        Integer[] simpleData = {1, 2, 3};
         initData(simpleData);
         list.remove(1);
         Assert.assertEquals(simpleData.length - 1, list.size());
@@ -86,5 +83,4 @@ public class MyArrayListTest {
     public void empty() {
         Assert.assertTrue(list.isEmpty());
     }
-
 }
