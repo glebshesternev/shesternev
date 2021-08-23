@@ -1,8 +1,9 @@
 package com.shesternev.classloader;
 
 import com.shesternev.classloader.myclassloader.MyClassLoader;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MyClassLoaderTest {
 
@@ -10,16 +11,16 @@ public class MyClassLoaderTest {
 
     @Test
     public void loadClass() throws ClassNotFoundException {
-        Class<?> clazz = classLoader.loadClass("MyArrayList");
         String clazzName = "MyArrayList";
-        Assert.assertEquals(clazzName, clazz.getName());
+        Class<?> clazz = classLoader.loadClass(clazzName);
+        assertEquals(clazzName, clazz.getName());
     }
 
     @Test
     public void loadClassFromPackage() throws ClassNotFoundException {
-        Class<?> clazz = classLoader.loadClass("com.shesternev.multithreading.model.Horse");
         String clazzName = "com.shesternev.multithreading.model.Horse";
-        Assert.assertEquals(clazzName, clazz.getName());
+        Class<?> clazz = classLoader.loadClass(clazzName);
+        assertEquals(clazzName, clazz.getName());
     }
 
 }

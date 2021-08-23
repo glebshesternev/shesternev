@@ -1,8 +1,9 @@
 package com.shesternev.multithreading;
 
 import com.shesternev.multithreading.model.Horse;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HorseTest {
 
@@ -10,15 +11,15 @@ public class HorseTest {
 
     @Test
     public void move() {
-        for (int i = 0; i < 10; i++) {
-            horse.move();
-        }
-        Assert.assertTrue(horse.getDistance() > 0);
+        horse.move();
+        horse.move();
+        horse.move();
+        assertTrue(horse.getDistance() > 0);
     }
 
     @Test
     public void track() {
         horse.setDistance(3);
-        Assert.assertEquals("..." + horse.getName(), horse.track());
+        assertEquals("..." + horse.getName(), horse.track());
     }
 }

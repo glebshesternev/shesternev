@@ -1,57 +1,58 @@
 package com.shesternev.collections;
 
 import com.shesternev.collections.impl.MyArrayList;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MyArrayListTest {
 
-    private final MyList<Integer> list = new MyArrayList<>();
+    private final MyList<Object> list = new MyArrayList<>();
 
-    public void initData(Integer... values) {
-        for (Integer value : values) {
+    public void initData(Object... values) {
+        for (Object value : values) {
             list.add(value);
         }
     }
 
     @Test
     public void constructorShouldThrowNegativeArraySizeException() {
-        Assert.assertThrows(NegativeArraySizeException.class, () -> new MyArrayList(-1));
+        assertThrows(NegativeArraySizeException.class, () -> new MyArrayList(-1));
     }
 
     @Test
     public void size() {
-        Integer[] values = {3, 5, 9};
-        initData(values);
-        Assert.assertEquals(values.length, list.size());
+        int initSize = 3;
+        initData(3, 5, 9);
+        assertEquals(initSize, list.size());
     }
 
     @Test
     public void addByIndexShouldThrowIllegalArgumentException() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> list.add(list.size() + 1, 1));
+        assertThrows(IllegalArgumentException.class, () -> list.add(list.size() + 1, 1));
     }
 
     @Test
     public void get() {
-        Integer[] simpleData = {1};
-        initData(simpleData);
-        Assert.assertEquals(simpleData[0], list.get(0));
+        int value = 1;
+        initData(value);
+        assertEquals(value, list.get(0));
     }
 
     @Test
     public void getShouldThrowIllegalArgumentException() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> list.get(list.size() + 1));
+        assertThrows(IllegalArgumentException.class, () -> list.get(list.size() + 1));
     }
 
     @Test
     public void set() {
         list.set(0, 9);
-        Assert.assertEquals(Integer.valueOf(9), list.get(0));
+        assertEquals(9, list.get(0));
     }
 
     @Test
     public void setShouldThrowIllegalArgumentException() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> list.set(list.size() + 1, 0));
+        assertThrows(IllegalArgumentException.class, () -> list.set(list.size() + 1, 0));
     }
 
     @Test
@@ -59,28 +60,28 @@ public class MyArrayListTest {
         Integer[] simpleData = {1, 2, 3};
         initData(simpleData);
         list.remove(1);
-        Assert.assertEquals(simpleData.length - 1, list.size());
-        Assert.assertEquals(simpleData[2], list.get(1));
+        assertEquals(simpleData.length - 1, list.size());
+        assertEquals(simpleData[2], list.get(1));
     }
 
     @Test
     public void removeByValue() {
         initData(1);
-        Assert.assertTrue(list.remove(Integer.valueOf(1)));
+        assertTrue(list.remove(Integer.valueOf(1)));
     }
 
     @Test
     public void notRemoveByValue() {
-        Assert.assertFalse(list.remove(Integer.valueOf(4)));
+        assertFalse(list.remove(Integer.valueOf(4)));
     }
 
     @Test
     public void removeByIndexShouldThrowIllegalArgumentException() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> list.remove(list.size() + 1));
+        assertThrows(IllegalArgumentException.class, () -> list.remove(list.size() + 1));
     }
 
     @Test
     public void empty() {
-        Assert.assertTrue(list.isEmpty());
+        assertTrue(list.isEmpty());
     }
 }
