@@ -30,8 +30,8 @@ public class UserControllerTest {
     private UserService userService;
     @Autowired
     private MockMvc mockMvc;
-    private String userUrl = "/users";
-    private User user = new User("Arkady", "Gretskiy");
+    private final String userUrl = "/users";
+    private final User user = new User("Arkady", "Gretskiy");
 
     public void addUser() {
         UserDto userDto = new UserDto(user);
