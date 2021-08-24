@@ -1,5 +1,7 @@
 package com.shesternev.cache;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.shesternev.cache.caches.CacheAspect;
 import com.shesternev.cache.caches.FirstLevelCache;
 import com.shesternev.cache.caches.SecondLevelCache;
@@ -7,7 +9,6 @@ import com.shesternev.cache.model.User;
 import java.util.List;
 import lombok.SneakyThrows;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,7 +39,7 @@ public class AspectTest {
         ProceedingJoinPoint joinPoint = Mockito.mock(ProceedingJoinPoint.class);
         Mockito.when(joinPoint.proceed()).thenReturn(List.of(user));
         cacheAspect.proxyFirstLevelCacheClear(joinPoint);
-        Assertions.assertEquals(user, secondLevelCache.find(user.getName()));
+        assertEquals(user, secondLevelCache.find(user.getName()));
 
     }
 }
