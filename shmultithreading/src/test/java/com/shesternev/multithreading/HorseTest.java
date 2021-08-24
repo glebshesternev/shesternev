@@ -1,9 +1,10 @@
 package com.shesternev.multithreading;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.shesternev.multithreading.model.Horse;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class HorseTest {
 

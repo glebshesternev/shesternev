@@ -1,9 +1,9 @@
 package com.shesternev.classloader;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.shesternev.classloader.myclassloader.MyClassLoader;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class MyClassLoaderTest {
 
