@@ -3,6 +3,7 @@ package com.shesternev.cache.caches;
 import com.shesternev.cache.exception.CacheException;
 import com.shesternev.cache.model.User;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SecondLevelCache implements MyCache<String, User> {
@@ -30,4 +31,12 @@ public class SecondLevelCache implements MyCache<String, User> {
     public void put(String name, User user) {
         cache.put(name, user);
     }
+
+    @Override
+    public List<User> clear() {
+        List<User> users = cache.values().stream().toList();
+        cache.clear();
+        return users;
+    }
+
 }

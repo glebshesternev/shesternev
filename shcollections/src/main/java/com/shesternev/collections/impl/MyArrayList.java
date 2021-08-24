@@ -15,7 +15,6 @@ public class MyArrayList<T> implements MyList<T> {
 
     public MyArrayList(int size) {
         array = new Object[size];
-        this.size = size;
     }
 
 
