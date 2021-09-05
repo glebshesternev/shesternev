@@ -24,7 +24,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void addAndGet() {
+    public void getReturnObject() {
         String name = "Arkady";
         User user = new User(name);
         repository.add(user);

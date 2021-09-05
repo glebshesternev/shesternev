@@ -33,7 +33,7 @@ public class AspectTest {
 
     @SneakyThrows
     @Test
-    public void aspect() {
+    public void firstLevelCacheClean() {
         Mockito.when(firstLevelCache.clear()).thenReturn(List.of(user));
         firstLevelCache.clear();
         ProceedingJoinPoint joinPoint = Mockito.mock(ProceedingJoinPoint.class);

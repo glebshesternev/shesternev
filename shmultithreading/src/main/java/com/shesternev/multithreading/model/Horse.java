@@ -1,6 +1,5 @@
 package com.shesternev.multithreading.model;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,7 +43,8 @@ public class Horse implements Runnable {
     }
 
     public void move() {
-        distance += (speed * Math.random());
+        int moveDistance = (int) (speed * Math.random());
+        distance += moveDistance == 0 ? 1 : moveDistance;
     }
 
     public String track() {

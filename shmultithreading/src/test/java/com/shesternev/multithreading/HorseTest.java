@@ -11,15 +11,13 @@ public class HorseTest {
     Horse horse = new Horse("Arkady", 3, 0);
 
     @Test
-    public void move() {
-        horse.move();
-        horse.move();
+    public void moveIncreaseDistance() {
         horse.move();
         assertTrue(horse.getDistance() > 0);
     }
 
     @Test
-    public void track() {
+    public void trackReturnCorrectString() {
         horse.setDistance(3);
         assertEquals("..." + horse.getName(), horse.track());
     }
